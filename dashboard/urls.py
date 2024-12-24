@@ -37,6 +37,7 @@ router.register(r'multimediablockvideos', views.MultimediaBlockVideoViewSet, 'mu
 router.register(r'class-contents', views.ClassContentModelViewSet, 'class-contents')
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('api/', include(router.urls)),
     path('courses/', views.course_list, name='course_list'),
     path('courses/<int:course_id>/classes/<int:class_id>/', views.ClassDetailView.as_view(), name='class_detail'),
