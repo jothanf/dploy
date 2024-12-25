@@ -123,11 +123,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://dploy-production.up.railway.app",
     "https://lizethcas.github.io",
-    "https://lizethcas.github.io/poly_manager_front/",
-]
-
-CORS_ALLOWED_ORIGINS = [
-      # Tu frontend en GitHub Pages
+    "https://lizethcas.github.io/poly_manager_front",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
