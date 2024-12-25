@@ -135,14 +135,22 @@ class BaseModelViewSet(viewsets.ModelViewSet):
             }, status=status.HTTP_400_BAD_REQUEST)
 
 class CourseView(BaseModelViewSet):
+    parser_classes = (MultiPartParser, FormParser)
     serializer_class = CourseModelSerializer
     queryset = CourseModel.objects.all()
     model_name = 'curso'
-    parser_classes = (MultiPartParser, FormParser)
 
     def create(self, request, *args, **kwargs):
         try:
-            imagen = request.FILES.get('imagen')
+            # Manejo de archivos en chunks si es necesario
+            if 'cover' in request.FILES:
+                file_obj = request.FILES['cover']
+                if file_obj.size > 5242880:  # 5MB
+                    return Response({
+                        'status': 'error',
+                        'message': 'El archivo es demasiado grande',
+                    }, status=status.HTTP_400_BAD_REQUEST)
+
             response = super().create(request, *args, **kwargs)
             return Response({
                 'status': 'success',
@@ -152,8 +160,7 @@ class CourseView(BaseModelViewSet):
         except Exception as e:
             return Response({
                 'status': 'error',
-                'message': 'Error al crear el curso',
-                'error': str(e)
+                'message': str(e)
             }, status=status.HTTP_400_BAD_REQUEST)
 
 class ClassModelViewSet(BaseModelViewSet):

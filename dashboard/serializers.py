@@ -5,6 +5,15 @@ class CourseModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseModel
         fields = ['id', 'course_name', 'description', 'category', 'level', 'bullet_points', 'cover', 'created_at', 'updated_at']
+        
+    def create(self, validated_data):
+        # Manejo específico para archivos grandes
+        cover = validated_data.pop('cover', None)
+        instance = super().create(validated_data)
+        if cover:
+            instance.cover = cover
+            instance.save()
+        return instance
 
 
 class ClassModelSerializer(serializers.ModelSerializer):
