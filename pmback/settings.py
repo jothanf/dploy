@@ -123,7 +123,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://dploy-production.up.railway.app",
     "https://lizethcas.github.io",
-    "https://poly-manager-front.vercel.app"
+    "https://poly-manager-front.vercel.app/"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
