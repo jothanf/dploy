@@ -123,10 +123,32 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://dploy-production.up.railway.app",
     "https://lizethcas.github.io",
-    "https://poly-manager-front.vercel.app/"
+    "https://poly-manager-front.vercel.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 CORS_URLS_REGEX = r'^/api/.*$'
 
