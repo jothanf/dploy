@@ -122,11 +122,13 @@ AUTH_PASSWORD_VALIDATORS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://dploy-production.up.railway.app",
-    "https://lizethcas.github.io",
-    "https://lizethcas.github.io/poly_manager_front",
+    "https://lizethcas.github.io"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+CORS_URLS_REGEX = r'^/api/.*$'
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
