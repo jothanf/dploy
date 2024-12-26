@@ -232,18 +232,22 @@ WHITENOISE_MAX_AGE = 31536000  # 1 año en segundos
 # Configuración base para archivos estáticos y multimedia
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Eliminar STATICFILES_DIRS si no tienes una carpeta 'static' específica
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Configuración específica para producción
-if DEBUG:
-    # Configuración para desarrollo
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-else:
-    # Configuración para producción
+if not DEBUG:
     WHITENOISE_USE_FINDERS = True
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     
-    # Asegúrate de que las carpetas existan
+    # Crear directorios necesarios
     os.makedirs(STATIC_ROOT, exist_ok=True)
     os.makedirs(MEDIA_ROOT, exist_ok=True)
+
+    # Configuración de seguridad para producción
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

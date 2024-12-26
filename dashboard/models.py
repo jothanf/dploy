@@ -32,7 +32,12 @@ class MediaModel(models.Model):
         return f"{self.media_type} - {self.file.name}"
 
 class CourseModel(models.Model):
-    cover = models.ImageField(upload_to='course_covers/', null=True, blank=True)
+    cover = models.ImageField(
+        upload_to='course_covers/',
+        null=True,
+        blank=True,
+        storage=default_storage
+    )
     course_name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     category = models.CharField(max_length=100, null=True, blank=True)
@@ -405,8 +410,18 @@ class ClassContentModel(models.Model):
     
     # Campos para multimedia en JSON
     multimedia = models.JSONField(null=True, blank=True)
-    image = models.ImageField(upload_to='content_images/', null=True, blank=True)
-    video = models.FileField(upload_to='content_videos/', null=True, blank=True)
+    image = models.ImageField(
+        upload_to='content_images/',
+        null=True,
+        blank=True,
+        storage=default_storage
+    )
+    video = models.FileField(
+        upload_to='content_videos/',
+        null=True,
+        blank=True,
+        storage=default_storage
+    )
     video_transcription = models.TextField(null=True, blank=True)
     embed_video = models.URLField(null=True, blank=True)
     audio = models.FileField(upload_to='content_audios/', null=True, blank=True)
