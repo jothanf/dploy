@@ -228,3 +228,22 @@ CORS_ALLOW_HEADERS = [
 # Configuración de Whitenoise para archivos estáticos
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_MAX_AGE = 31536000  # 1 año en segundos
+
+# Configuración base para archivos estáticos y multimedia
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Configuración específica para producción
+if DEBUG:
+    # Configuración para desarrollo
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+else:
+    # Configuración para producción
+    WHITENOISE_USE_FINDERS = True
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    
+    # Asegúrate de que las carpetas existan
+    os.makedirs(STATIC_ROOT, exist_ok=True)
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
