@@ -30,7 +30,11 @@ SECRET_KEY = 'django-insecure-siy5knb5zsdk*fl%tu8#kz+f@!$dhkvh8_=*pb=8yys^7rsl0r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['localhost', 'dploy-production.up.railway.app']
+ALLOWED_HOSTS = [
+    'localhost',
+    'dploy-production.up.railway.app',
+    '.railway.app'  # Permite todos los subdominios de railway.app
+]
 CSRF_TRUSTED_ORIGINS = ['https://dploy-production.up.railway.app']
 
 
@@ -47,6 +51,8 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'rest_framework',
     'home',
+    'chat',
+    'channels',
     'dashboard',
 ]
 
@@ -122,7 +128,8 @@ AUTH_PASSWORD_VALIDATORS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://dploy-production.up.railway.app",
-    "https://poly-manager-front.vercel.app"
+    "https://poly-manager-front.vercel.app",
+    "https://*.railway.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -169,6 +176,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -251,3 +259,43 @@ if not DEBUG:
     # Configuración de seguridad para producción
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+
+if not os.path.exists(MEDIA_ROOT):
+    os.makedirs(MEDIA_ROOT)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'dashboard.views': {  # Asegúrate de que el nombre coincida con tu archivo de vistas
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
+
+ASGI_APPLICATION = 'pmback.asgi.application'
+
+# Configuración de channel layers
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
+
+# Permitir WebSocket
+CORS_ALLOW_ALL_ORIGINS = True  # Solo para desarrollo
+
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20MB
