@@ -10,7 +10,7 @@ sqlparse==0.5.3
 typing_extensions==4.12.2
 tzdata==2024.2
 whitenoise==6.8.2
-djangorestframework==3.14.0
+djangorestframework==3.15.2
 Pillow==11.0.0
 annotated-types==0.7.0
 anyio==4.7.0
@@ -29,7 +29,6 @@ cryptography==44.0.0
 daphne==4.1.2
 distro==1.9.0
 django-cors-headers==4.6.0
-djangorestframework==3.15.2
 drf-nested-routers==0.94.1
 google-api-core==2.24.0
 google-auth==2.37.0
